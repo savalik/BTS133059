@@ -22,6 +22,8 @@ public class Tree implements ITree {
     public void cleanTree() {
         root = null;
         System.gc();
+        length = 0;
+        counter = 0;
     }
 
     @Override
@@ -67,9 +69,15 @@ public class Tree implements ITree {
                         return;
                     }
                 } else {
-                    current = current.rightChild;
-                    if (current == null) {
-                        parent.rightChild = newNode;
+                    if (current.iData != key) {
+                        current = current.rightChild;
+                        if (current == null) {
+                            parent.rightChild = newNode;
+                            return;
+                        }
+                    }
+                    else {
+                        System.out.println("Node with same key (" + key + ") is already exists");
                         return;
                     }
                 }
