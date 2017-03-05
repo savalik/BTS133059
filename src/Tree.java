@@ -59,9 +59,10 @@ public class Tree implements ITree {
         Node newNode = new Node();
         newNode.iData = key;
         newNode.dData = data;
-        if (root == null)
+        if (root == null) {
             root = newNode;
-        else {
+            counter++;
+        } else {
             Node current = root;
             Node parent;
             while (true) {
@@ -82,6 +83,7 @@ public class Tree implements ITree {
                         }
                     } else {
                         System.out.println("Node with same key (" + key + ") is already exists");
+                        length--;
                         return;
                     }
                 }
@@ -169,12 +171,17 @@ public class Tree implements ITree {
 
     @Override
     public void throughTree(Node localRoot) {
+        if (localRoot == root) counter = 0;
+
         if (localRoot != null) {
             throughTree(localRoot.leftChild);
             System.out.print(localRoot.iData + " ");
+            counter++;
+            if (getLength() == counter) System.out.println();
             throughTree(localRoot.rightChild);
         }
-        //System.out.println(counter++ + getCounter());
+
+
     }
 
     @Override
@@ -229,20 +236,20 @@ public class Tree implements ITree {
 
     @Override
     public void showTree() {
-        Stack globalStack = new Stack();
+        Stack<Node> globalStack = new Stack<Node>();
         globalStack.push(root);
         int nBlanks = 32;
         boolean isRowEmpty = false;
         System.out.println(".....................................");
         while (!isRowEmpty) {
-            Stack localStack = new Stack();
+            Stack<Node> localStack = new Stack<Node>();
             isRowEmpty = true;
 
             for (int j = 0; j < nBlanks; j++)
                 System.out.print(' ');
 
             while (!globalStack.isEmpty()) {
-                Node temp = (Node) globalStack.pop();
+                Node temp = globalStack.pop();
                 if (temp != null) {
                     System.out.print(temp.iData);
                     localStack.push(temp.leftChild);
