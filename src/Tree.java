@@ -1,8 +1,5 @@
 import java.util.Stack;
 
-/**
- * Created by Андрей on 01.03.2017.
- */
 public class Tree implements ITree {
 
     private Node root;
@@ -11,6 +8,14 @@ public class Tree implements ITree {
 
     Tree() {
         root = null;
+    }
+
+    public Iterator getIterator() {
+        return new Iterator(root);
+    }
+
+    public Node getRoot() {
+        return root;
     }
 
     @Override
@@ -75,8 +80,7 @@ public class Tree implements ITree {
                             parent.rightChild = newNode;
                             return;
                         }
-                    }
-                    else {
+                    } else {
                         System.out.println("Node with same key (" + key + ") is already exists");
                         return;
                     }
@@ -145,7 +149,7 @@ public class Tree implements ITree {
         return true;
     }
 
-    private Node getSuccessor(Node delNode) {
+    private Node getSuccessor(Node delNode) {  //поиск наследника для замещения удаленной ноды
         Node successorParent = delNode;
         Node successor = delNode;
         Node current = delNode.rightChild;
@@ -169,6 +173,57 @@ public class Tree implements ITree {
             throughTree(localRoot.leftChild);
             System.out.print(localRoot.iData + " ");
             throughTree(localRoot.rightChild);
+        }
+        //System.out.println(counter++ + getCounter());
+    }
+
+    @Override
+    public void recursiveRemove(int key, Node current, Node parent, boolean isLeftChild) {
+        if (parent == null)
+            counter = 0;
+        else
+            counter++;
+
+        if (current != null) if (key < current.iData)
+            recursiveRemove(key, current.leftChild, current, true);
+        else if (key != current.iData)
+            recursiveRemove(key, current.rightChild, current, false);
+        else {
+            if (current.leftChild == null && current.rightChild == null) {
+                if (current == root)
+                    root = null;
+                else if (isLeftChild)
+                    parent.leftChild = null;
+                else
+                    parent.rightChild = null;
+            } else if (current.rightChild == null)
+                if (current == root)
+                    root = current.leftChild;
+                else if (isLeftChild)
+                    parent.leftChild = current.leftChild;
+                else
+                    parent.rightChild = current.leftChild;
+
+            else if (current.leftChild == null)
+                if (current == root)
+                    root = current.rightChild;
+                else if (isLeftChild)
+                    parent.leftChild = current.rightChild;
+                else
+                    parent.rightChild = current.rightChild;
+
+            else {
+                Node successor = getSuccessor(current);
+
+                if (current == root)
+                    root = successor;
+                else if (isLeftChild)
+                    parent.leftChild = successor;
+                else
+                    parent.rightChild = successor;
+
+                successor.leftChild = current.leftChild;
+            }
         }
     }
 
