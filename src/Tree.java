@@ -1,10 +1,26 @@
 import java.util.Stack;
+//todo: replace counter in node's methods
 
 public class Tree implements ITree {
 
     private Node root;
     private int counter;
     private int length;
+
+    public class Node {
+        public int iData;
+        public double dData;
+        public Node leftChild;
+        public Node rightChild;
+
+        public void displayNode() {
+            System.out.print('{');
+            System.out.print(iData);
+            System.out.print(". ");
+            System.out.print(dData);
+            System.out.print('}');
+        }
+    }
 
     Tree() {
         root = null;

@@ -2,13 +2,13 @@ import java.util.Stack;
 
 public class Iterator {
 
-    private Node root = null;
-    private Node current = null;
-    private Stack<Node> temporary = new Stack<>();
-    private Stack<Node> nextNodes = new Stack<>();
-    private Stack<Node> prevNodes = new Stack<>();
+    private Tree.Node root = null;
+    private Tree.Node current = null;
+    private Stack<Tree.Node> temporary = new Stack<>();
+    private Stack<Tree.Node> nextNodes = new Stack<>();
+    private Stack<Tree.Node> prevNodes = new Stack<>();
 
-    Iterator (Node currentRoot) {
+    Iterator (Tree.Node currentRoot) {
         root = currentRoot;
         setToRoot();
         System.out.println(prevNodes + " " + nextNodes);
@@ -55,7 +55,7 @@ public class Iterator {
     }
 
     // рекурсивное заполнение стеков
-    private void traverseSubtree (Node node) {
+    private void traverseSubtree (Tree.Node node) {
         if (node.leftChild != null) {
             traverseSubtree(node.leftChild);
         }
