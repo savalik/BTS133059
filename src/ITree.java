@@ -7,7 +7,7 @@ public interface ITree {
     boolean removeNode(int key);
     Iterator getIterator();
     void throughTree(Node localRoot); // Lt -> t -> Rt  в рекурсивной форме
-    void recursiveRemove(int key, Node currentNode, Node parentNode, boolean isLeftChild); //todo: удаление узла дерева с объеденением двух поддереьве в рекурсивной форме
+    void recursiveRemove(int key, Node currentNode, Node parentNode, boolean isLeftChild);
     void showTree();
     int getCounter();
 }

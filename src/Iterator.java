@@ -17,14 +17,14 @@ public class Iterator {
     /** Установка на корень дерева */
     public void setToRoot () {
         current = root;
-        if (root.leftChild != null) {
+        if (root.getLeftChild() != null) {
             temporary.clear();
-            traverseSubtree(root.leftChild);
+            traverseSubtree(root.getLeftChild());
             prevNodes.addAll(temporary);
         }
-        if (root.rightChild != null) {
+        if (root.getRightChild() != null) {
             temporary.clear();
-            traverseSubtree(root.rightChild);
+            traverseSubtree(root.getRightChild());
             while (!temporary.empty()) {
                 nextNodes.push(temporary.pop());
             }
@@ -38,8 +38,8 @@ public class Iterator {
 
     /** Доступ к данным текущего элемента дерева */
     public double getData () {
-        System.out.println(current.iData + ": " + current.dData);
-        return current.dData;
+        System.out.println(current.getiData() + ": " + current.getdData());
+        return current.getdData();
     }
 
     /** Переход к следующему по значению ключа элементу дерева */
@@ -56,12 +56,12 @@ public class Iterator {
 
     // рекурсивное заполнение стеков
     private void traverseSubtree (Node node) {
-        if (node.leftChild != null) {
-            traverseSubtree(node.leftChild);
+        if (node.getLeftChild() != null) {
+            traverseSubtree(node.getLeftChild());
         }
         temporary.push(node);
-        if (node.rightChild != null) {
-            traverseSubtree(node.rightChild);
+        if (node.getRightChild() != null) {
+            traverseSubtree(node.getRightChild());
         }
     }
 }
