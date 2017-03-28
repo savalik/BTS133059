@@ -8,10 +8,50 @@ public class Tree implements ITree {
     private int length;
 
     public class Node {
-        public int iData;
-        public double dData;
-        public Node leftChild;
-        public Node rightChild;
+        private int iData;
+        private double dData;
+        private Node leftChild;
+        private Node rightChild;
+
+        public int getiData() {
+            counter++;
+            return iData;
+        }
+
+        public void setiData(int iData) {
+            counter++;
+            this.iData = iData;
+        }
+
+        public double getdData() {
+            counter++;
+            return dData;
+        }
+
+        public void setdData(double dData) {
+            counter++;
+            this.dData = dData;
+        }
+
+        public Node getLeftChild() {
+            counter++;
+            return leftChild;
+        }
+
+        public void setLeftChild(Node leftChild) {
+            counter++;
+            this.leftChild = leftChild;
+        }
+
+        public Node getRightChild() {
+            counter++;
+            return rightChild;
+        }
+
+        public void setRightChild(Node rightChild) {
+            counter++;
+            this.rightChild = rightChild;
+        }
 
         public void displayNode() {
             System.out.print('{');
@@ -30,7 +70,7 @@ public class Tree implements ITree {
         return new Iterator(root);
     }
 
-    public Node getRoot() {
+    Node getRoot() {
         return root;
     }
 
@@ -56,12 +96,12 @@ public class Tree implements ITree {
     public Node find(int key) {
         counter = 0;
         Node current = root;
-        while (current.iData != key) {
-            counter++;
-            if (key < current.iData)
-                current = current.leftChild;
+        while (current.getiData() != key) {
+            //counter++;
+            if (key < current.getiData())
+                current = current.getLeftChild();
             else
-                current = current.rightChild;
+                current = current.getRightChild();
             if (current == null)
                 return null;
         }
@@ -73,28 +113,28 @@ public class Tree implements ITree {
         length++;
         counter = 0;
         Node newNode = new Node();
-        newNode.iData = key;
-        newNode.dData = data;
+        newNode.setiData(key);
+        newNode.setdData(data);
         if (root == null) {
             root = newNode;
-            counter++;
+            //counter++;
         } else {
             Node current = root;
             Node parent;
             while (true) {
-                counter++;
+                //counter++;
                 parent = current;
-                if (key < current.iData) {
-                    current = current.leftChild;
+                if (key < current.getiData()) {
+                    current = current.getLeftChild();
                     if (current == null) {
-                        parent.leftChild = newNode;
+                        parent.setLeftChild(newNode);
                         return;
                     }
                 } else {
-                    if (current.iData != key) {
-                        current = current.rightChild;
+                    if (current.getiData() != key) {
+                        current = current.getRightChild();
                         if (current == null) {
-                            parent.rightChild = newNode;
+                            parent.setRightChild(newNode);
                             return;
                         }
                     } else {
@@ -115,42 +155,42 @@ public class Tree implements ITree {
         Node parent = root;
         boolean isLeftChild = true;
 
-        while (current.iData != key) {
-            counter++;
+        while (current.getiData() != key) {
+            //counter++;
             parent = current;
-            if (key < current.iData) {
+            if (key < current.getiData()) {
                 isLeftChild = true;
-                current = current.leftChild;
+                current = current.getLeftChild();
             } else {
                 isLeftChild = false;
-                current = current.rightChild;
+                current = current.getRightChild();
             }
             if (current == null)
                 return false;
         }
 
-        if (current.leftChild == null && current.rightChild == null) {
+        if (current.getLeftChild() == null && current.getRightChild() == null) {
             if (current == root)
                 root = null;
             else if (isLeftChild)
-                parent.leftChild = null;
+                parent.setLeftChild(null);
             else
-                parent.rightChild = null;
-        } else if (current.rightChild == null)
+                parent.setRightChild(null);
+        } else if (current.getRightChild() == null)
             if (current == root)
-                root = current.leftChild;
+                root = current.getLeftChild();
             else if (isLeftChild)
-                parent.leftChild = current.leftChild;
+                parent.setLeftChild(current.getLeftChild());
             else
-                parent.rightChild = current.leftChild;
+                parent.setRightChild(current.getLeftChild());
 
-        else if (current.leftChild == null)
+        else if (current.getLeftChild() == null)
             if (current == root)
-                root = current.rightChild;
+                root = current.getRightChild();
             else if (isLeftChild)
-                parent.leftChild = current.rightChild;
+                parent.setLeftChild(current.getRightChild());
             else
-                parent.rightChild = current.rightChild;
+                parent.setRightChild(current.getRightChild());
 
         else {
             Node successor = getSuccessor(current);
@@ -158,11 +198,11 @@ public class Tree implements ITree {
             if (current == root)
                 root = successor;
             else if (isLeftChild)
-                parent.leftChild = successor;
+                parent.setLeftChild(successor);
             else
-                parent.rightChild = successor;
+                parent.setRightChild(successor);
 
-            successor.leftChild = current.leftChild;
+            successor.setLeftChild(current.getLeftChild());
         }
         return true;
     }
@@ -170,17 +210,17 @@ public class Tree implements ITree {
     private Node getSuccessor(Node delNode) {  //поиск наследника для замещения удаленной ноды
         Node successorParent = delNode;
         Node successor = delNode;
-        Node current = delNode.rightChild;
+        Node current = delNode.getRightChild();
         while (current != null) {
-            counter++;
+            //counter++;
             successorParent = successor;
             successor = current;
-            current = current.leftChild;
+            current = current.getLeftChild();
         }
 
-        if (successor != delNode.rightChild) {
-            successorParent.leftChild = successor.rightChild;
-            successor.rightChild = delNode.rightChild;
+        if (successor != delNode.getRightChild()) {
+            successorParent.setLeftChild(successor.getRightChild());
+            successor.setRightChild(delNode.getRightChild());
         }
         return successor;
     }
@@ -190,11 +230,11 @@ public class Tree implements ITree {
         if (localRoot == root) counter = 0;
 
         if (localRoot != null) {
-            throughTree(localRoot.leftChild);
-            System.out.print(localRoot.iData + " ");
-            counter++;
+            throughTree(localRoot.getLeftChild());
+            System.out.print(localRoot.getiData() + " ");
+            //counter++;
             if (getLength() == counter) System.out.println();
-            throughTree(localRoot.rightChild);
+            throughTree(localRoot.getRightChild());
         }
 
 
@@ -204,36 +244,34 @@ public class Tree implements ITree {
     public void recursiveRemove(int key, Node current, Node parent, boolean isLeftChild) {
         if (parent == null)
             counter = 0;
-        else
-            counter++;
 
-        if (current != null) if (key < current.iData)
-            recursiveRemove(key, current.leftChild, current, true);
-        else if (key != current.iData)
-            recursiveRemove(key, current.rightChild, current, false);
+        if (current != null) if (key < current.getiData())
+            recursiveRemove(key, current.getLeftChild(), current, true);
+        else if (key != current.getiData())
+            recursiveRemove(key, current.getRightChild(), current, false);
         else {
-            if (current.leftChild == null && current.rightChild == null) {
+            if (current.getLeftChild() == null && current.getRightChild() == null) {
                 if (current == root)
                     root = null;
                 else if (isLeftChild)
-                    parent.leftChild = null;
+                    parent.setLeftChild(null);
                 else
-                    parent.rightChild = null;
-            } else if (current.rightChild == null)
+                    parent.setRightChild(null);
+            } else if (current.getRightChild() == null)
                 if (current == root)
-                    root = current.leftChild;
+                    root = current.getLeftChild();
                 else if (isLeftChild)
-                    parent.leftChild = current.leftChild;
+                    parent.setLeftChild(current.getLeftChild());
                 else
-                    parent.rightChild = current.leftChild;
+                    parent.setRightChild(current.getLeftChild());
 
-            else if (current.leftChild == null)
+            else if (current.getLeftChild() == null)
                 if (current == root)
-                    root = current.rightChild;
+                    root = current.getRightChild();
                 else if (isLeftChild)
-                    parent.leftChild = current.rightChild;
+                    parent.setLeftChild(current.getRightChild());
                 else
-                    parent.rightChild = current.rightChild;
+                    parent.setRightChild(current.getRightChild());
 
             else {
                 Node successor = getSuccessor(current);
@@ -241,11 +279,11 @@ public class Tree implements ITree {
                 if (current == root)
                     root = successor;
                 else if (isLeftChild)
-                    parent.leftChild = successor;
+                    parent.setLeftChild(successor);
                 else
-                    parent.rightChild = successor;
+                    parent.setRightChild(successor);
 
-                successor.leftChild = current.leftChild;
+                successor.setLeftChild(current.getLeftChild());
             }
         }
     }
@@ -256,7 +294,7 @@ public class Tree implements ITree {
         globalStack.push(root);
         int nBlanks = 32;
         boolean isRowEmpty = false;
-        System.out.println(".....................................");
+        System.out.println("\n................................................................");
         while (!isRowEmpty) {
             Stack<Node> localStack = new Stack<Node>();
             isRowEmpty = true;
@@ -267,11 +305,11 @@ public class Tree implements ITree {
             while (!globalStack.isEmpty()) {
                 Node temp = globalStack.pop();
                 if (temp != null) {
-                    System.out.print(temp.iData);
-                    localStack.push(temp.leftChild);
-                    localStack.push(temp.rightChild);
+                    System.out.print(temp.getiData());
+                    localStack.push(temp.getLeftChild());
+                    localStack.push(temp.getRightChild());
 
-                    if (temp.rightChild != null || temp.leftChild != null)
+                    if (temp.getRightChild() != null || temp.getLeftChild() != null)
                         isRowEmpty = false;
                 } else {
                     System.out.print("--");
@@ -288,7 +326,7 @@ public class Tree implements ITree {
             while (!localStack.isEmpty())
                 globalStack.push(localStack.pop());
         }
-        System.out.println(".....................................");
+        System.out.println("\n................................................................");
         counter = getLength();
     }
 
