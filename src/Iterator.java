@@ -1,17 +1,16 @@
 import java.util.Stack;
 
-public class Iterator {
+public class Iterator<T> {
 
-    private Tree.Node root = null;
-    private Tree.Node current = null;
-    private Stack<Tree.Node> temporary = new Stack<>();
-    private Stack<Tree.Node> nextNodes = new Stack<>();
-    private Stack<Tree.Node> prevNodes = new Stack<>();
+    private Tree<T>.Node<T> root = null;
+    private Tree<T>.Node<T> current = null;
+    private Stack<Tree<T>.Node<T>> temporary = new Stack<>();
+    private Stack<Tree<T>.Node<T>> nextNodes = new Stack<>();
+    private Stack<Tree<T>.Node<T>> prevNodes = new Stack<>();
 
-    Iterator (Tree.Node currentRoot) {
+    Iterator (Tree<T>.Node<T> currentRoot) {
         root = currentRoot;
         setToRoot();
-        System.out.println(prevNodes + " " + nextNodes);
     }
 
     /** Установка на корень дерева */
@@ -37,9 +36,12 @@ public class Iterator {
     }
 
     /** Доступ к данным текущего элемента дерева */
-    public double getData () {
-        System.out.println(current.getiData() + ": " + current.getdData());
+    public T getData () {
         return current.getdData();
+    }
+
+    public int getKey () {
+        return current.getiData();
     }
 
     /** Переход к следующему по значению ключа элементу дерева */
@@ -55,7 +57,7 @@ public class Iterator {
     }
 
     // рекурсивное заполнение стеков
-    private void traverseSubtree (Tree.Node node) {
+    private void traverseSubtree (Tree<T>.Node<T> node) {
         if (node.getLeftChild() != null) {
             traverseSubtree(node.getLeftChild());
         }

@@ -1,17 +1,16 @@
 import java.util.Stack;
-//todo: replace counter in node's methods
 
-public class Tree implements ITree {
+public class Tree<T> implements ITree<T> {
 
-    private Node root;
+    private Node<T> root;
     private int counter;
     private int length;
 
-    public class Node {
+    public class Node<T> {
         private int iData;
-        private double dData;
-        private Node leftChild;
-        private Node rightChild;
+        private T dData;
+        private Node<T> leftChild;
+        private Node<T> rightChild;
 
         public int getiData() {
             counter++;
@@ -23,32 +22,33 @@ public class Tree implements ITree {
             this.iData = iData;
         }
 
-        public double getdData() {
+        public T getdData() {
             counter++;
             return dData;
         }
 
-        public void setdData(double dData) {
+        public void setdData(T dData) {
+            counter++;
             counter++;
             this.dData = dData;
         }
 
-        public Node getLeftChild() {
+        public Node<T> getLeftChild() {
             counter++;
             return leftChild;
         }
 
-        public void setLeftChild(Node leftChild) {
+        public void setLeftChild(Node<T> leftChild) {
             counter++;
             this.leftChild = leftChild;
         }
 
-        public Node getRightChild() {
+        public Node<T> getRightChild() {
             counter++;
             return rightChild;
         }
 
-        public void setRightChild(Node rightChild) {
+        public void setRightChild(Node<T> rightChild) {
             counter++;
             this.rightChild = rightChild;
         }
@@ -66,11 +66,11 @@ public class Tree implements ITree {
         root = null;
     }
 
-    public Iterator getIterator() {
-        return new Iterator(root);
+    public Iterator<T> getIterator() {
+        return new Iterator<T>(root);
     }
 
-    Node getRoot() {
+    Node<T> getRoot() {
         return root;
     }
 
@@ -93,9 +93,9 @@ public class Tree implements ITree {
     }
 
     @Override
-    public Node find(int key) {
+    public Node<T> find(int key) {
         counter = 0;
-        Node current = root;
+        Node<T> current = root;
         while (current.getiData() != key) {
             //counter++;
             if (key < current.getiData())
@@ -109,10 +109,10 @@ public class Tree implements ITree {
     }
 
     @Override
-    public void addNode(int key, double data) {
+    public void addNode(int key, T data) {
         length++;
         counter = 0;
-        Node newNode = new Node();
+        Node<T> newNode = new Node<T>();
         newNode.setiData(key);
         newNode.setdData(data);
         if (root == null) {
@@ -151,8 +151,8 @@ public class Tree implements ITree {
     public boolean removeNode(int key) {
         length--;
         counter = 0;
-        Node current = root;
-        Node parent = root;
+        Node<T> current = root;
+        Node<T> parent = root;
         boolean isLeftChild = true;
 
         while (current.getiData() != key) {
@@ -207,10 +207,10 @@ public class Tree implements ITree {
         return true;
     }
 
-    private Node getSuccessor(Node delNode) {  //поиск наследника для замещения удаленной ноды
-        Node successorParent = delNode;
-        Node successor = delNode;
-        Node current = delNode.getRightChild();
+    private Node<T> getSuccessor(Node<T> delNode) {  //поиск наследника для замещения удаленной ноды
+        Node<T> successorParent = delNode;
+        Node<T> successor = delNode;
+        Node<T> current = delNode.getRightChild();
         while (current != null) {
             //counter++;
             successorParent = successor;
@@ -226,7 +226,7 @@ public class Tree implements ITree {
     }
 
     @Override
-    public void throughTree(Node localRoot) {
+    public void throughTree(Node<T> localRoot) {
         if (localRoot == root) counter = 0;
 
         if (localRoot != null) {
@@ -241,7 +241,7 @@ public class Tree implements ITree {
     }
 
     @Override
-    public void recursiveRemove(int key, Node current, Node parent, boolean isLeftChild) {
+    public void recursiveRemove(int key, Node<T> current, Node<T> parent, boolean isLeftChild) {
         if (parent == null)
             counter = 0;
 
@@ -274,7 +274,7 @@ public class Tree implements ITree {
                     parent.setRightChild(current.getRightChild());
 
             else {
-                Node successor = getSuccessor(current);
+                Node<T> successor = getSuccessor(current);
 
                 if (current == root)
                     root = successor;
@@ -290,20 +290,20 @@ public class Tree implements ITree {
 
     @Override
     public void showTree() {
-        Stack<Node> globalStack = new Stack<Node>();
+        Stack<Node<T>> globalStack = new Stack<Node<T>>();
         globalStack.push(root);
         int nBlanks = 32;
         boolean isRowEmpty = false;
         System.out.println("\n................................................................");
         while (!isRowEmpty) {
-            Stack<Node> localStack = new Stack<Node>();
+            Stack<Node<T>> localStack = new Stack<Node<T>>();
             isRowEmpty = true;
 
             for (int j = 0; j < nBlanks; j++)
                 System.out.print(' ');
 
             while (!globalStack.isEmpty()) {
-                Node temp = globalStack.pop();
+                Node<T> temp = globalStack.pop();
                 if (temp != null) {
                     System.out.print(temp.getiData());
                     localStack.push(temp.getLeftChild());

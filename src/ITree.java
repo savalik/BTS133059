@@ -1,13 +1,13 @@
-public interface ITree {
+public interface ITree<T> {
     int getLength();
     void cleanTree();
     boolean isEmpty();
-    Tree.Node find(int key);
-    void addNode(int key, double data);
+    Tree<T>.Node<T> find(int key);
+    void addNode(int key, T data);
     boolean removeNode(int key);
-    Iterator getIterator();
-    void throughTree(Tree.Node localRoot); // Lt -> t -> Rt  в рекурсивной форме
-    void recursiveRemove(int key, Tree.Node currentNode, Tree.Node parentNode, boolean isLeftChild); //todo: удаление узла дерева с объеденением двух поддереьве в рекурсивной форме
+    Iterator<T> getIterator();
+    void throughTree(Tree<T>.Node<T> localRoot); // Lt -> t -> Rt  в рекурсивной форме
+    void recursiveRemove(int key, Tree<T>.Node<T> currentNode, Tree<T>.Node<T> parentNode, boolean isLeftChild); //todo: удаление узла дерева с объеденением двух поддереьве в рекурсивной форме
     void showTree();
     int getCounter();
 }
