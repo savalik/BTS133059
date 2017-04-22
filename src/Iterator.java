@@ -1,30 +1,29 @@
 import java.util.Stack;
 
-public class Iterator {
+public class Iterator<T> {
 
-    private Node root = null;
-    private Node current = null;
-    private Stack<Node> temporary = new Stack<>();
-    private Stack<Node> nextNodes = new Stack<>();
-    private Stack<Node> prevNodes = new Stack<>();
+    private Tree<T>.Node<T> root = null;
+    private Tree<T>.Node<T> current = null;
+    private Stack<Tree<T>.Node<T>> temporary = new Stack<>();
+    private Stack<Tree<T>.Node<T>> nextNodes = new Stack<>();
+    private Stack<Tree<T>.Node<T>> prevNodes = new Stack<>();
 
-    Iterator (Node currentRoot) {
+    Iterator (Tree<T>.Node<T> currentRoot) {
         root = currentRoot;
         setToRoot();
-        System.out.println(prevNodes + " " + nextNodes);
     }
 
     /** Установка на корень дерева */
     public void setToRoot () {
         current = root;
-        if (root.leftChild != null) {
+        if (root.getLeftChild() != null) {
             temporary.clear();
-            traverseSubtree(root.leftChild);
+            traverseSubtree(root.getLeftChild());
             prevNodes.addAll(temporary);
         }
-        if (root.rightChild != null) {
+        if (root.getRightChild() != null) {
             temporary.clear();
-            traverseSubtree(root.rightChild);
+            traverseSubtree(root.getRightChild());
             while (!temporary.empty()) {
                 nextNodes.push(temporary.pop());
             }
@@ -37,9 +36,12 @@ public class Iterator {
     }
 
     /** Доступ к данным текущего элемента дерева */
-    public double getData () {
-        System.out.println(current.iData + ": " + current.dData);
-        return current.dData;
+    public T getData () {
+        return current.getdData();
+    }
+
+    public int getKey () {
+        return current.getiData();
     }
 
     /** Переход к следующему по значению ключа элементу дерева */
@@ -55,13 +57,13 @@ public class Iterator {
     }
 
     // рекурсивное заполнение стеков
-    private void traverseSubtree (Node node) {
-        if (node.leftChild != null) {
-            traverseSubtree(node.leftChild);
+    private void traverseSubtree (Tree<T>.Node<T> node) {
+        if (node.getLeftChild() != null) {
+            traverseSubtree(node.getLeftChild());
         }
         temporary.push(node);
-        if (node.rightChild != null) {
-            traverseSubtree(node.rightChild);
+        if (node.getLeftChild() != null) {
+            traverseSubtree(node.getLeftChild());
         }
     }
 }
