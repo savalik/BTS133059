@@ -5,6 +5,7 @@ public class Tree<T> implements ITree<T> {
     private Node<T> root;
     private int counter;
     private int length;
+    Iterator<T> iterator = getIterator();
 
     public class Node<T> {
         private int iData;
@@ -28,7 +29,6 @@ public class Tree<T> implements ITree<T> {
         }
 
         public void setdData(T dData) {
-            counter++;
             counter++;
             this.dData = dData;
         }
@@ -58,7 +58,7 @@ public class Tree<T> implements ITree<T> {
             System.out.print(iData);
             System.out.print(". ");
             System.out.print(dData);
-            System.out.print('}');
+            System.out.print("}\n");
         }
     }
 
@@ -67,7 +67,7 @@ public class Tree<T> implements ITree<T> {
     }
 
     public Iterator<T> getIterator() {
-        return new Iterator<T>(root);
+        return new Iterator<>(root);
     }
 
     Node<T> getRoot() {
@@ -97,6 +97,8 @@ public class Tree<T> implements ITree<T> {
     public Node<T> find(int key) {
         counter = 0;
         Node<T> current = root;
+        if (current == null)
+            return null;
         while (current.getiData() != key) {
             //counter++;
             if (key < current.getiData())
@@ -113,17 +115,15 @@ public class Tree<T> implements ITree<T> {
     public void addNode(int key, T data) {
         length++;
         counter = 0;
-        Node<T> newNode = new Node<T>();
+        Node<T> newNode = new Node<>();
         newNode.setiData(key);
         newNode.setdData(data);
         if (root == null) {
             root = newNode;
-            //counter++;
         } else {
             Node<T> current = root;
             Node<T> parent;
             while (true) {
-                //counter++;
                 parent = current;
                 if (key < current.getiData()) {
                     current = current.getLeftChild();
@@ -312,13 +312,13 @@ public class Tree<T> implements ITree<T> {
 
     @Override
     public void showTree() {
-        Stack<Node<T>> globalStack = new Stack<Node<T>>();
+        Stack<Node<T>> globalStack = new Stack<>();
         globalStack.push(root);
-        int nBlanks = 32;
+        int nBlanks =128;
         boolean isRowEmpty = false;
         System.out.println("\n................................................................");
         while (!isRowEmpty) {
-            Stack<Node<T>> localStack = new Stack<Node<T>>();
+            Stack<Node<T>> localStack = new Stack<>();
             isRowEmpty = true;
 
             for (int j = 0; j < nBlanks; j++)

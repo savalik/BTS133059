@@ -10,12 +10,13 @@ public class Iterator<T> {
 
     Iterator (Tree<T>.Node<T> currentRoot) {
         root = currentRoot;
-        setToRoot();
+        // setToRoot(currentRoot); nullpointerexception because root = null by default
     }
 
     /** Установка на корень дерева */
-    public void setToRoot () {
-        current = root;
+    public void setToRoot (Tree<T>.Node<T> currentRoot) {
+        root = currentRoot;
+        current = currentRoot;
         if (root.getLeftChild() != null) {
             temporary.clear();
             traverseSubtree(root.getLeftChild());
@@ -40,20 +41,32 @@ public class Iterator<T> {
         return current.getdData();
     }
 
+    public void setData(T data){
+        current.setdData(data);
+    }
+
     public int getKey () {
         return current.getiData();
     }
 
     /** Переход к следующему по значению ключа элементу дерева */
     public void goToNext () {
-        prevNodes.push(current);
-        current = nextNodes.pop();
+        if(isLast())
+            System.out.println("Last node!");
+        else {
+            prevNodes.push(current);
+            current = nextNodes.pop();
+        }
     }
 
     /** переход к предыдущему по значению ключа элементу дерева */
     public void goToPrevious () {
-        nextNodes.push(current);
-        current = prevNodes.pop();
+        if (current == root)
+            System.out.println("Already at root!");
+        else {
+            nextNodes.push(current);
+            current = prevNodes.pop();
+        }
     }
 
     // рекурсивное заполнение стеков
