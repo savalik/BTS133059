@@ -85,6 +85,7 @@ public class Tree<T> implements ITree<T> {
         System.gc();
         length = 0;
         counter = 0;
+        System.out.println("The tree has been clean");
     }
 
     @Override
@@ -119,8 +120,8 @@ public class Tree<T> implements ITree<T> {
             root = newNode;
             //counter++;
         } else {
-            Node current = root;
-            Node parent;
+            Node<T> current = root;
+            Node<T> parent;
             while (true) {
                 //counter++;
                 parent = current;
@@ -149,62 +150,67 @@ public class Tree<T> implements ITree<T> {
 
     @Override
     public boolean removeNode(int key) {
-        length--;
-        counter = 0;
-        Node<T> current = root;
-        Node<T> parent = root;
-        boolean isLeftChild = true;
-
-        while (current.getiData() != key) {
-            //counter++;
-            parent = current;
-            if (key < current.getiData()) {
-                isLeftChild = true;
-                current = current.getLeftChild();
-            } else {
-                isLeftChild = false;
-                current = current.getRightChild();
-            }
-            if (current == null)
-                return false;
+        if(root == null) {
+            System.out.println("Tree is empty! Division by zero! Nothing to remove!");
+            return false;
         }
-
-        if (current.getLeftChild() == null && current.getRightChild() == null) {
-            if (current == root)
-                root = null;
-            else if (isLeftChild)
-                parent.setLeftChild(null);
-            else
-                parent.setRightChild(null);
-        } else if (current.getRightChild() == null)
-            if (current == root)
-                root = current.getLeftChild();
-            else if (isLeftChild)
-                parent.setLeftChild(current.getLeftChild());
-            else
-                parent.setRightChild(current.getLeftChild());
-
-        else if (current.getLeftChild() == null)
-            if (current == root)
-                root = current.getRightChild();
-            else if (isLeftChild)
-                parent.setLeftChild(current.getRightChild());
-            else
-                parent.setRightChild(current.getRightChild());
-
         else {
-            Node successor = getSuccessor(current);
+            length--;
+            counter = 0;
+            Node<T> current = root;
+            Node<T> parent = root;
+            boolean isLeftChild = true;
 
-            if (current == root)
-                root = successor;
-            else if (isLeftChild)
-                parent.setLeftChild(successor);
-            else
-                parent.setRightChild(successor);
+            while (current.getiData() != key) {
+                parent = current;
+                if (key < current.getiData()) {
+                    isLeftChild = true;
+                    current = current.getLeftChild();
+                } else {
+                    isLeftChild = false;
+                    current = current.getRightChild();
+                }
+                if (current == null)
+                    return false;
+            }
 
-            successor.setLeftChild(current.getLeftChild());
+            if (current.getLeftChild() == null && current.getRightChild() == null) {
+                if (current == root)
+                    root = null;
+                else if (isLeftChild)
+                    parent.setLeftChild(null);
+                else
+                    parent.setRightChild(null);
+            } else if (current.getRightChild() == null)
+                if (current == root)
+                    root = current.getLeftChild();
+                else if (isLeftChild)
+                    parent.setLeftChild(current.getLeftChild());
+                else
+                    parent.setRightChild(current.getLeftChild());
+
+            else if (current.getLeftChild() == null)
+                if (current == root)
+                    root = current.getRightChild();
+                else if (isLeftChild)
+                    parent.setLeftChild(current.getRightChild());
+                else
+                    parent.setRightChild(current.getRightChild());
+
+            else {
+                Node<T> successor = getSuccessor(current);
+
+                if (current == root)
+                    root = successor;
+                else if (isLeftChild)
+                    parent.setLeftChild(successor);
+                else
+                    parent.setRightChild(successor);
+
+                successor.setLeftChild(current.getLeftChild());
+            }
+            return true;
         }
-        return true;
     }
 
     private Node<T> getSuccessor(Node<T> delNode) {  //поиск наследника для замещения удаленной ноды
@@ -253,35 +259,51 @@ public class Tree<T> implements ITree<T> {
             if (current.getLeftChild() == null && current.getRightChild() == null) {
                 if (current == root)
                     root = null;
-                else if (isLeftChild)
+                else if (isLeftChild) {
+                    assert parent != null;
                     parent.setLeftChild(null);
-                else
+                }
+                else {
+                    assert parent != null;
                     parent.setRightChild(null);
+                }
             } else if (current.getRightChild() == null)
                 if (current == root)
                     root = current.getLeftChild();
-                else if (isLeftChild)
+                else if (isLeftChild) {
+                    assert parent != null;
                     parent.setLeftChild(current.getLeftChild());
-                else
+                }
+                else {
+                    assert parent != null;
                     parent.setRightChild(current.getLeftChild());
+                }
 
             else if (current.getLeftChild() == null)
                 if (current == root)
                     root = current.getRightChild();
-                else if (isLeftChild)
+                else if (isLeftChild) {
+                    assert parent != null;
                     parent.setLeftChild(current.getRightChild());
-                else
+                }
+                else {
+                    assert parent != null;
                     parent.setRightChild(current.getRightChild());
+                }
 
             else {
                 Node<T> successor = getSuccessor(current);
 
                 if (current == root)
                     root = successor;
-                else if (isLeftChild)
+                else if (isLeftChild) {
+                    assert parent != null;
                     parent.setLeftChild(successor);
-                else
+                }
+                else {
+                    assert parent != null;
                     parent.setRightChild(successor);
+                }
 
                 successor.setLeftChild(current.getLeftChild());
             }
