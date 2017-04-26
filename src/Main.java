@@ -269,7 +269,9 @@ public class Main {
                 myTree.iterator.setToRoot(myTree.getRoot());
                 iteratorFlag = true;
             }
-
+            System.out.println(" current node:");
+            System.out.println("{ KEY | DATA } ");
+            System.out.println("{ " + myTree.iterator.getKey() + " | " + myTree.iterator.getData() + " }");
             System.out.println("\nEnter a character corresponding to one of the following commands:");
             System.out.println("a - set iterator on root of tree");
             System.out.println("b - check end of tree");
@@ -292,7 +294,6 @@ public class Main {
                     getIteratorMenu();
                     break;
                 case 'c':
-                    System.out.println(myTree.iterator.getData());
                     System.out.println("Do you want change node data? (y - for change)");
                     if (getCommand() == 'y') {
                         switch (TreeType) {
