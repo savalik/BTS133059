@@ -240,6 +240,7 @@ public class Main {
                 System.exit(0);
                 break;
             default:
+                getMenu();
                 break;
         }
     }
@@ -291,7 +292,7 @@ public class Main {
                     getIteratorMenu();
                     break;
                 case 'c':
-                    myTree.iterator.getData();
+                    System.out.println(myTree.iterator.getData());
                     System.out.println("Do you want change node data? (y - for change)");
                     if (getCommand() == 'y') {
                         switch (TreeType) {
@@ -345,6 +346,9 @@ public class Main {
                     break;
                 case 'x':
                     System.exit(0);
+                    break;
+                default:
+                    getIteratorMenu();
                     break;
             }
 
