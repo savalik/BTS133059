@@ -238,8 +238,6 @@ public class Tree<T> implements ITree<T> {
         if (localRoot != null) {
             throughTree(localRoot.getLeftChild());
             System.out.print(localRoot.getiData() + " ");
-            //counter++;
-            if (getLength() == counter) System.out.println();
             throughTree(localRoot.getRightChild());
         }
 
