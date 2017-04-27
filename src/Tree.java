@@ -150,11 +150,10 @@ public class Tree<T> implements ITree<T> {
 
     @Override
     public boolean removeNode(int key) {
-        if(root == null) {
+        if (root == null) {
             System.out.println("Tree is empty! Division by zero! Nothing to remove!");
             return false;
-        }
-        else {
+        } else {
             length--;
             counter = 0;
             Node<T> current = root;
@@ -260,8 +259,7 @@ public class Tree<T> implements ITree<T> {
                 else if (isLeftChild) {
                     assert parent != null;
                     parent.setLeftChild(null);
-                }
-                else {
+                } else {
                     assert parent != null;
                     parent.setRightChild(null);
                 }
@@ -271,8 +269,7 @@ public class Tree<T> implements ITree<T> {
                 else if (isLeftChild) {
                     assert parent != null;
                     parent.setLeftChild(current.getLeftChild());
-                }
-                else {
+                } else {
                     assert parent != null;
                     parent.setRightChild(current.getLeftChild());
                 }
@@ -283,8 +280,7 @@ public class Tree<T> implements ITree<T> {
                 else if (isLeftChild) {
                     assert parent != null;
                     parent.setLeftChild(current.getRightChild());
-                }
-                else {
+                } else {
                     assert parent != null;
                     parent.setRightChild(current.getRightChild());
                 }
@@ -297,8 +293,7 @@ public class Tree<T> implements ITree<T> {
                 else if (isLeftChild) {
                     assert parent != null;
                     parent.setLeftChild(successor);
-                }
-                else {
+                } else {
                     assert parent != null;
                     parent.setRightChild(successor);
                 }
@@ -312,7 +307,7 @@ public class Tree<T> implements ITree<T> {
     public void showTree() {
         Stack<Node<T>> globalStack = new Stack<>();
         globalStack.push(root);
-        int nBlanks =128;
+        int nBlanks = 128;
         boolean isRowEmpty = false;
         System.out.println("\n................................................................");
         while (!isRowEmpty) {

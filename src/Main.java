@@ -117,7 +117,7 @@ public class Main {
                             System.out.println("same error during removing node with key " + remKey + ".");
 
                     } else {
-                        if(getCommand() == 'x') break;
+                        if (getCommand() == 'x') break;
                         sc.nextLine();
                     }
                 }
