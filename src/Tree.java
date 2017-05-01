@@ -88,6 +88,14 @@ public class Tree<T> implements ITree<T> {
         System.out.println("The tree has been clean");
     }
 
+    public void cleanTree(boolean quiet) {
+        root = null;
+        System.gc();
+        length = 0;
+        counter = 0;
+        if (quiet == false) System.out.println("The tree has been clean");
+    }
+
     @Override
     public boolean isEmpty() {
         return root == null;
@@ -112,7 +120,7 @@ public class Tree<T> implements ITree<T> {
     }
 
     @Override
-    public void addNode(int key, T data) {
+    public boolean addNode(int key, T data) {
         length++;
         counter = 0;
         Node<T> newNode = new Node<>();
@@ -120,6 +128,7 @@ public class Tree<T> implements ITree<T> {
         newNode.setdData(data);
         if (root == null) {
             root = newNode;
+            return true;
         } else {
             Node<T> current = root;
             Node<T> parent;
@@ -129,19 +138,56 @@ public class Tree<T> implements ITree<T> {
                     current = current.getLeftChild();
                     if (current == null) {
                         parent.setLeftChild(newNode);
-                        return;
+                        return true;
                     }
                 } else {
                     if (current.getiData() != key) {
                         current = current.getRightChild();
                         if (current == null) {
                             parent.setRightChild(newNode);
-                            return;
+                            return true;
                         }
                     } else {
                         System.out.println("Node with same key (" + key + ") is already exists");
                         length--;
-                        return;
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean addNode(int key, T data, boolean quiet) {
+        length++;
+        counter = 0;
+        Node<T> newNode = new Node<>();
+        newNode.setiData(key);
+        newNode.setdData(data);
+        if (root == null) {
+            root = newNode;
+            return true;
+        } else {
+            Node<T> current = root;
+            Node<T> parent;
+            while (true) {
+                parent = current;
+                if (key < current.getiData()) {
+                    current = current.getLeftChild();
+                    if (current == null) {
+                        parent.setLeftChild(newNode);
+                        return true;
+                    }
+                } else {
+                    if (current.getiData() != key) {
+                        current = current.getRightChild();
+                        if (current == null) {
+                            parent.setRightChild(newNode);
+                            return true;
+                        }
+                    } else {
+                        if (!quiet) System.out.println("Node with same key (" + key + ") is already exists");
+                        length--;
+                        return false;
                     }
                 }
             }

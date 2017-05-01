@@ -3,7 +3,7 @@ public interface ITree<T> {
     void cleanTree();
     boolean isEmpty();
     Tree<T>.Node<T> find(int key);
-    void addNode(int key, T data);
+    boolean addNode(int key, T data);
     boolean removeNode(int key);
     Iterator<T> getIterator();
     void throughTree(Tree<T>.Node<T> localRoot); // Lt -> t -> Rt  в рекурсивной форме
